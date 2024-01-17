@@ -13,5 +13,6 @@ struct iJournal_SwiftDataApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: Entry.self)
     }
 }

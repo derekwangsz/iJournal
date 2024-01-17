@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    
+    @Query private var entries: [Entry]
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
