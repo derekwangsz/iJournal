@@ -13,16 +13,15 @@ struct ContentView: View {
     @Query private var entries: [Entry]
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        List {
+            ForEach(entries) { entry in
+                Text(entry.title)
+            }
         }
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
+        .modelContainer(Entry.preview)
 }

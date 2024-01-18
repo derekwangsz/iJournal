@@ -8,10 +8,15 @@
 import SwiftUI
 import SwiftData
 import PhotosUI
+import UIKit
+
 
 struct EditEntryView: View {
     @State private var selectedItems = [PhotosPickerItem]()
+    
     @State private var selectedImages = [Image]()
+    
+    @Environment(\.dismiss) var dismiss
     
     @FocusState private var typing : Bool
     
@@ -19,34 +24,61 @@ struct EditEntryView: View {
     
     var body: some View {
         VStack {
-            Text(entry.date.formatted(date: .abbreviated, time: .shortened))
+            HStack {
+                Text(entry.date.formatted(date: .abbreviated, time: .shortened))
+                    .font(.headline.bold())
+                
+                Spacer()
+                
+                Button("Save") {
+                    dismiss()
+                }
+                .font(.headline)
+                
+            }
+            .padding(25)
             
             Form {
-                PhotosPicker(selection: $selectedItems, matching: .images) {
-                    HStack {
-                        Circle()
-                            .opacity(0.5)
-                            .overlay {
-                                Image(systemName: "plus")
-                                    .resizable()
-                                    .padding()
-                            }
-                            .frame(width: 80, height: 80)
-                        
-                        Text("Add Image")
-                            .font(.title)
-                            .fontWeight(.bold)
-                        
-                    }
+                Section("Title") {
+                    TextField("Title", text: $entry.title, prompt: Text("Title..."))
+                        .font(.title)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
                 }
-                .onChange(of: selectedItems) {
-                    Task {
-                        selectedImages.removeAll()
-                        
-                        for item in selectedItems {
-                            if let image = try? await item.loadTransferable(type: Image.self) {
-                                selectedImages.append(image)
-                            }
+                
+                Section("Images") {
+                    PhotosPicker(selection: $selectedItems, matching: .images) {
+                        HStack {
+                            Circle()
+                                .opacity(0.5)
+                                .overlay {
+                                    Image(systemName: "plus")
+                                        .resizable()
+                                        .padding()
+                                }
+                                .frame(width: 50, height: 50)
+                            
+                            Text("Add Image")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            
+                        }
+                    }
+                    .onChange(of: selectedItems) {
+                        Task {
+                            await fetchImages()
+                        }
+                    }
+                    
+                    LazyVGrid (columns: [GridItem(.flexible()),
+                                         GridItem(.flexible()),
+                                         GridItem(.flexible())], alignment: .leading, spacing: 10) {
+                        ForEach(0..<selectedImages.count, id: \.self) { i in
+                            selectedImages[i]
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .cornerRadius(20)
+                                
                         }
                     }
                 }
@@ -57,7 +89,7 @@ struct EditEntryView: View {
                             .font(.title3)
                             .fontDesign(.serif)
                         Slider(value: $entry.happinessIndex,
-                               in: 0...11, step: 1,
+                               in: 0...10, step: 1,
                                label: { Text("\(Int(entry.happinessIndex))") },
                                minimumValueLabel:
                                 { Text("🤮").font(.title)},
@@ -73,9 +105,37 @@ struct EditEntryView: View {
                 }
             }
         }
-        
+        .onAppear {
+            loadImages()
+        }
         
     }
+    
+    func fetchImages() async {
+        for item in selectedItems {
+            if let data = try? await item.loadTransferable(type: Data.self) {
+                entry.images.insert(data, at: 0)
+                
+                guard let uiImage = UIImage(data: data) else { return }
+                withAnimation(.easeInOut) {
+                    selectedImages.insert(Image(uiImage: uiImage), at: 0)
+                }
+            }
+        }
+    }
+    
+    func loadImages() {
+        withAnimation(.easeInOut) {
+            selectedImages = entry.images.map { data in
+                if let uiImage = UIImage(data: data) {
+                    Image(uiImage: uiImage)
+                } else {
+                    Image("ramen")
+                }
+            }
+        }
+    }
+    
 }
 
 #Preview {
@@ -83,7 +143,9 @@ struct EditEntryView: View {
         // To use example data for the preview, we need to establish our own temporary model container in memory that stores our example data and use that in the preview.
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: Entry.self, configurations: config)
-        let example = Entry(images: [], happinessIndex: 8, date: Date.now, text: "What happened today? ...")
+        
+        let data = UIImage(named: "ramen")!.jpegData(compressionQuality: 1)!
+        let example = Entry(images: [data], happinessIndex: 8, date: Date.now, title: "Brilliant day in Tokyo!", text: "I just had the best ramen in my life!")
         return EditEntryView(entry: example)
             .modelContainer(container)
     }
@@ -91,3 +153,4 @@ struct EditEntryView: View {
         fatalError("Failed to create model.")
     }
 }
+
