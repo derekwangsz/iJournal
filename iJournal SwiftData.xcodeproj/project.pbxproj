@@ -14,6 +14,7 @@
 		ED7D0B032B5798F700E5A9A2 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7D0B022B5798F700E5A9A2 /* Entry.swift */; };
 		ED7D0B052B579CA500E5A9A2 /* EditEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7D0B042B579CA500E5A9A2 /* EditEntryView.swift */; };
 		ED7D0B072B58765B00E5A9A2 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7D0B062B58765B00E5A9A2 /* EntryView.swift */; };
+		ED7D0B092B59C01B00E5A9A2 /* EntryListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		ED7D0B022B5798F700E5A9A2 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		ED7D0B042B579CA500E5A9A2 /* EditEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEntryView.swift; sourceTree = "<group>"; };
 		ED7D0B062B58765B00E5A9A2 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
+		ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryListingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			children = (
 				ED7D0AF42B5798BC00E5A9A2 /* iJournal_SwiftDataApp.swift */,
 				ED7D0AF62B5798BC00E5A9A2 /* ContentView.swift */,
+				ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */,
 				ED7D0B062B58765B00E5A9A2 /* EntryView.swift */,
 				ED7D0B042B579CA500E5A9A2 /* EditEntryView.swift */,
 				ED7D0B022B5798F700E5A9A2 /* Entry.swift */,
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED7D0B092B59C01B00E5A9A2 /* EntryListingView.swift in Sources */,
 				ED7D0B032B5798F700E5A9A2 /* Entry.swift in Sources */,
 				ED7D0B052B579CA500E5A9A2 /* EditEntryView.swift in Sources */,
 				ED7D0B072B58765B00E5A9A2 /* EntryView.swift in Sources */,

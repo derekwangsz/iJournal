@@ -12,14 +12,29 @@ import UIKit
 struct ContentView: View {
     
     @Environment(\.modelContext) var modelContext
-    @Query private var entries: [Entry]
+    
+    @State private var searchText = ""
+    
+    @State private var sortDescriptor: SortDescriptor<Entry> = SortDescriptor(\Entry.date)
+    
+    @State private var presentSheet = false
+    
     
     var body: some View {
+        
         VStack {
-            
             HStack {
-                Button {
-                    // show menu of filtering options
+                
+                // Menu for sort order selection
+                Menu {
+                    Picker("Sort", selection: $sortDescriptor) {
+                        Text("Date")
+                            .tag(SortDescriptor(\Entry.date))
+                        Text("Title")
+                            .tag(SortDescriptor(\Entry.title))
+                        Text("Mood")
+                            .tag(SortDescriptor(\Entry.happinessIndex, order: .reverse))
+                    }
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                         .font(.title2)
@@ -28,7 +43,7 @@ struct ContentView: View {
                 Spacer()
                 
                 Text("iJournal")
-                    .font(.largeTitle)
+                    .font(.system(size: 42))
                     .fontDesign(.rounded)
                     .fontWeight(.thin)
                     .padding()
@@ -37,46 +52,35 @@ struct ContentView: View {
                 
                 Button {
                     // construct new Entry & transition to EditEntryView
+                    presentSheet = true
+                    
                 } label: {
                     Image(systemName: "square.and.pencil")
                         .font(.title2)
                 }
-            }
-            .padding(.horizontal)
-            
-            Divider()
-            
-            List {
-                ForEach(entries) { entry in
-                    HStack {
-                        if let data = entry.images.first {
-                            if let uiImage = UIImage(data: data) {
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .cornerRadius(20)
-                                    .frame(maxHeight: 80)
-                            }
-                        }
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .trailing) {
-                            Text(entry.title)
-                                .font(.headline)
-                                .fontDesign(.serif)
-                            Text(entry.date.formatted(date: .abbreviated, time: .omitted))
-                                .font(.caption)
-                        }
-                    }
-                    .onTapGesture {
-                        // transition to EntryView
+                .fullScreenCover(isPresented: $presentSheet ) {
+                    Button("Edit Entry View") {
+                        presentSheet = false
                     }
                 }
             }
-            .listStyle(.plain)
-            .scrollIndicators(.automatic)
+            .padding(.horizontal)
+            
+            TextField("Search...", text: $searchText)
+                .padding(.horizontal)
+                .padding(.vertical, 5)
+                .background(.quaternary)
+                .cornerRadius(30)
+                .padding(.horizontal)
+                .font(.title3)
+                .fontWeight(.thin)
+                .fontDesign(.serif)
+            
+            Divider()
+            
+            EntryListingView(searchText: searchText, sort: sortDescriptor)
         }
+        
     }
 }
 

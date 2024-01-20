@@ -24,6 +24,29 @@ class Entry {
         self.title = title
         self.text = text
     }
+    
+    init() {
+        self.images = []
+        self.happinessIndex = 3
+        self.date = .now
+        self.title = ""
+        self.text = ""
+    }
+    
+    func getMood() -> String {
+        switch happinessIndex {
+        case 0..<3:
+            return "🤮"
+        case 3..<6:
+            return "🙁"
+        case 6..<8:
+            return "😁"
+        case 8...10:
+            return "🚀"
+        default:
+            return "😳"
+        }
+    }
 }
 
 
