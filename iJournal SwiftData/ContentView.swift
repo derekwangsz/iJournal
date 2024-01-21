@@ -58,11 +58,6 @@ struct ContentView: View {
                     Image(systemName: "square.and.pencil")
                         .font(.title2)
                 }
-                .fullScreenCover(isPresented: $presentSheet ) {
-                    Button("Edit Entry View") {
-                        presentSheet = false
-                    }
-                }
             }
             .padding(.horizontal)
             
@@ -80,7 +75,9 @@ struct ContentView: View {
             
             EntryListingView(searchText: searchText, sort: sortDescriptor)
         }
-        
+        .sheet(isPresented: $presentSheet) {
+            AddEntryView()
+        }
     }
 }
 

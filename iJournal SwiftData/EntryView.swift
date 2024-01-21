@@ -10,10 +10,13 @@ import SwiftData
 
 struct EntryView: View {
     
+    @Environment(\.dismiss) var dismiss
     var entry: Entry
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button("dismiss") {
+            dismiss()
+        }
     }
 }
 
