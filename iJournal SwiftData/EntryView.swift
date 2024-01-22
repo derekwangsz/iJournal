@@ -14,7 +14,7 @@ struct EntryView: View {
     var entry: Entry
     
     var body: some View {
-        Button("dismiss") {
+        Button(entry.title) {
             dismiss()
         }
     }

@@ -28,45 +28,60 @@ struct EntryListingView: View {
     }
     
     var body: some View {
-        List {
-            ForEach(entries) { entry in
-                Button {
-                    presentEntry = true
-                } label: {
-                    HStack {
-                        if let data = entry.images.first {
-                            if let uiImage = UIImage(data: data) {
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .cornerRadius(20)
-                                    .frame(maxHeight: 80)
+        
+        NavigationStack {
+            ScrollView {
+                LazyVStack {
+                    ForEach(entries) { entry in
+                        NavigationLink(value: entry) {
+                            HStack {
+                                if let data = entry.images.first {
+                                    if let uiImage = UIImage(data: data) {
+                                        Image(uiImage: uiImage)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .cornerRadius(20)
+                                            .frame(maxHeight: 80)
+                                    }
+                                }
+                                
+                                Spacer()
+                                
+                                VStack(alignment: .trailing) {
+                                    Text(entry.title)
+                                        .font(.headline)
+                                        .fontDesign(.serif)
+                                    Text("\(entry.getMood()) \( entry.date.formatted(date:.abbreviated, time: .omitted))")
+                                        .font(.caption)
+                                }
                             }
+//                            .padding()
+//                            .overlay {
+//                                RoundedRectangle(cornerRadius: 20)
+//                                    .strokeBorder(lineWidth: 0)
+//                                    .shadow(color: .black ,radius: 5, x: 10, y: 10)
+//                            }
                         }
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .trailing) {
-                            Text(entry.title)
-                                .font(.headline)
-                                .fontDesign(.serif)
-                            Text("\(entry.getMood()) \( entry.date.formatted(date:.abbreviated, time: .omitted))")
-                                .font(.caption)
+                        .scrollTransition { content, phase in
+                            content
+                                .scaleEffect(phase.isIdentity ? 1 : 0.8)
+                                .opacity(phase.isIdentity ? 1 : 0.2)
                         }
+                        .buttonStyle(ListButtonStyle())
                     }
+                    .onDelete(perform: { indexSet in
+                        // delete entry
+                        delete(indexSet)
+                    })
                 }
-                .fullScreenCover(isPresented: $presentEntry) {
-                    EntryView(entry: entry)
-                }
-                .buttonStyle(ListButtonStyle())
+                .contentMargins(5, for: .scrollIndicators)
+                .scrollIndicators(.automatic)
             }
-            .onDelete(perform: { indexSet in
-                // delete entry
-                delete(indexSet)
-            })
+            .navigationDestination(for: Entry.self) { entry in
+                EntryView(entry: entry)
+            }
+            .toolbar(.hidden, for: .navigationBar)
         }
-        .listStyle(.plain)
-        .scrollIndicators(.automatic)
     }
     
     func delete(_ indexSet: IndexSet) {
