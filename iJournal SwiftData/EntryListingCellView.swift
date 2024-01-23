@@ -34,11 +34,6 @@ struct EntryListingCellView: View {
                     .font(.caption)
             }
         }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(50)
-        .padding()
-        .shadow(color: .pink, radius: 2, x: 1, y: 4)
     }
 }
 

@@ -36,12 +36,12 @@ struct EntryListingView: View {
                         NavigationLink(value: entry) {
                             EntryListingCellView(entry: entry)
                         }
+                        .buttonStyle(ListButtonStyle())
                         .scrollTransition { content, phase in
                             content
-                                .scaleEffect(phase.isIdentity ? 1 : 0.8)
-                                .opacity(phase.isIdentity ? 1 : 0.2)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                                .opacity(phase.isIdentity ? 1 : 0.3)
                         }
-                        .buttonStyle(ListButtonStyle())
                     }
                     .onDelete(perform: { indexSet in
                         delete(indexSet)

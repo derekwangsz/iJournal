@@ -49,9 +49,10 @@ class Entry {
     }
 }
 
-
+//MARK: - Entry Preview Mock Data Temporary Container
 extension Entry {
     // Create a static property that returns a ModelContainer
+    //  for previews that get modelContext from the ENVIORNMENT
         @MainActor
         static var preview: ModelContainer {
             let container = try! ModelContainer(for: Entry.self,
@@ -65,7 +66,32 @@ extension Entry {
             container.mainContext.insert(Entry(images: [data], happinessIndex: 6, date: .now, title: "Fourth day in Tokyo", text: "Ate fourth ramen!"))
             container.mainContext.insert(Entry(images: [data], happinessIndex: 8, date: .now, title: "Fifth day in Tokyo", text: "Ate fifth ramen!"))
             container.mainContext.insert(Entry(images: [data], happinessIndex: 10, date: .now, title: "Sixth day in Tokyo", text: "Ate sixth ramen!"))
+            container.mainContext.insert(Entry(images: [data], happinessIndex: 10, date: .now, title: "Seventh day in Tokyo", text: "Ate seventh ramen!"))
+            container.mainContext.insert(Entry(images: [data], happinessIndex: 10, date: .now, title: "Eighth day in Tokyo", text: "Ate eighth ramen!"))
+            container.mainContext.insert(Entry(images: [data], happinessIndex: 10, date: .now, title: "Nineth day in Tokyo", text: "Ate nineth ramen!"))
+            container.mainContext.insert(Entry(images: [data], happinessIndex: 10, date: .now, title: "Tenth day in Tokyo", text: "Ate tenth ramen!"))
             
             return container
         }
 }
+
+
+//MARK: - Entry Preview Empty Temporary Container & Example
+extension Entry {
+    static var emptyTemporaryContainer : ModelContainer {
+        do {
+            let config = ModelConfiguration(isStoredInMemoryOnly: true)
+            let container = try ModelContainer(for: Entry.self, configurations: config)
+            return container
+        } catch {
+            fatalError("Could not initialize temporary container for Entry.")
+        }
+    }
+    
+    static var example : Entry {
+        let data = UIImage(named: "ramen")!.jpegData(compressionQuality: 1)!
+        return Entry(images: [data], happinessIndex: 8, date: Date.now, title: "What a day in Tokyo!", text: "I just had the best ramen in my life!")
+    }
+    
+}
+
