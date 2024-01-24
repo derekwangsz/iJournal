@@ -23,7 +23,7 @@ struct EntryListingView: View {
                 } else {
                     return $0.title.localizedStandardContains(searchText)
                 }},
-            sort: [sort], 
+            sort: [sort],
             animation: .easeInOut)
     }
     
@@ -32,26 +32,26 @@ struct EntryListingView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack {
+                    //            List {
                     ForEach(entries) { entry in
-                        NavigationLink(value: entry) {
-                            EntryListingCellView(entry: entry)
-                        }
-                        .buttonStyle(ListButtonStyle())
-                        .scrollTransition { content, phase in
-                            content
-                                .scaleEffect(phase.isIdentity ? 1 : 0.9)
-                                .opacity(phase.isIdentity ? 1 : 0.3)
-                        }
+                        
+                        EntryListingCellView(entry: entry)
+//                            .buttonStyle(ListButtonStyle())
+                            .scrollTransition { content, phase in
+                                content
+                                    .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                                    .opacity(phase.isIdentity ? 1 : 0.3)
+                            }
+                        
+                        //MARK: - SCROLLVIEW doesn't seem to allow swipe actions!
+                        // Only List with embedded ForEach allows for swipe.
                     }
                     .onDelete(perform: { indexSet in
                         delete(indexSet)
                     })
                 }
+                //.listStyle(.plain)
             }
-            .navigationDestination(for: Entry.self) { entry in
-                EntryView(entry: entry)
-            }
-            .toolbar(.hidden, for: .navigationBar)
         }
     }
     
