@@ -12,7 +12,9 @@ import UIKit
 struct EntryView: View {
     
     @Environment(\.dismiss) var dismiss
-    var entry: Entry
+    @Environment(\.editMode) var editMode
+    
+    @Bindable var entry: Entry
     
     var body: some View {
         Button(entry.title) {

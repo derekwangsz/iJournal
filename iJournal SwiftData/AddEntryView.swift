@@ -22,7 +22,7 @@ struct AddEntryView: View {
     
     @State private var title = ""
     @State private var date = Date.now
-    @State private var mood = 3.0
+    @State private var mood = 7.0
     @State private var imageData: [Data] = []
     @State private var text = ""
     

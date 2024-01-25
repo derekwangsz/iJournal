@@ -43,7 +43,6 @@ struct SwipeButtonsModifier: ViewModifier {
 
                     Button {
                         self.dismiss()
-
                         button.action()
                     } label: {
                         VStack {
@@ -83,11 +82,21 @@ struct SwipeButtonsModifier: ViewModifier {
                             if value.translation.width < 0 || self.lastPosition < 0 {
                                 self.position = self.lastPosition + value.translation.width
                             }
+                            
+                            print(value.translation.width)
                         }
                         .onEnded { value in
                             self.swipeShouldPublishNotification = true
                             
-                            //MARK: - Swipe over halfway to delete, (or consider putting edit button as swipe action as well?)
+                            print("ENDED")
+                            
+                            // check if translation is enough to trigger swipe to delete
+                            if value.translation.width < -260 {
+                                if let actionButton = buttons.last {
+                                    actionButton.action()
+                                }
+                                self.dismiss()
+                            }
                             
                             if value.translation.width < 0 && abs(value.translation.width + self.lastPosition) > 20 * self.count {
                                 let fixedWidth = -self.buttonWidth * self.count
