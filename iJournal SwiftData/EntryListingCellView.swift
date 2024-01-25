@@ -10,6 +10,7 @@ import SwiftData
 
 struct EntryListingCellView: View {
     
+    @Environment(\.modelContext) var modelContext
     @Bindable var entry : Entry
     
     @State private var showModal = false
@@ -45,6 +46,7 @@ struct EntryListingCellView: View {
         .shadow(color: Color.secondary, radius: 2, x: 1, y: 4)
         .scaleEffect(scale)
         .opacity(opacity)
+        
         .onTapGesture {
             withAnimation {
                 opacity = 0.8
@@ -56,8 +58,15 @@ struct EntryListingCellView: View {
             }
             showModal = true
         }
+        
         .fullScreenCover(isPresented: $showModal) {
             EntryView(entry: entry)
+        }
+    }
+    
+    func delete() {
+        withAnimation {
+            modelContext.delete(entry)
         }
     }
 }

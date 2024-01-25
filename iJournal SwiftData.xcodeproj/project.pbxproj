@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED4B28EA2B62BB6500422CDB /* EmptyListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4B28E92B62BB6500422CDB /* EmptyListingView.swift */; };
+		ED4B28EE2B62C09F00422CDB /* SwipeButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4B28ED2B62C09F00422CDB /* SwipeButtonModifier.swift */; };
 		ED614BAD2B5DD62E00571557 /* ListButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED614BAC2B5DD62E00571557 /* ListButtonStyle.swift */; };
 		ED614BAF2B5DDDD500571557 /* AddEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED614BAE2B5DDDD500571557 /* AddEntryView.swift */; };
 		ED7D0AF52B5798BC00E5A9A2 /* iJournal_SwiftDataApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7D0AF42B5798BC00E5A9A2 /* iJournal_SwiftDataApp.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ED4B28E92B62BB6500422CDB /* EmptyListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListingView.swift; sourceTree = "<group>"; };
+		ED4B28ED2B62C09F00422CDB /* SwipeButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeButtonModifier.swift; sourceTree = "<group>"; };
 		ED614BAC2B5DD62E00571557 /* ListButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListButtonStyle.swift; sourceTree = "<group>"; };
 		ED614BAE2B5DDDD500571557 /* AddEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntryView.swift; sourceTree = "<group>"; };
 		ED7D0AF12B5798BC00E5A9A2 /* iJournal SwiftData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iJournal SwiftData.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,11 +72,13 @@
 				ED7D0AF42B5798BC00E5A9A2 /* iJournal_SwiftDataApp.swift */,
 				ED7D0AF62B5798BC00E5A9A2 /* ContentView.swift */,
 				ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */,
+				ED4B28E92B62BB6500422CDB /* EmptyListingView.swift */,
 				EDAFADEF2B601E2300CCDDDB /* EntryListingCellView.swift */,
 				ED614BAE2B5DDDD500571557 /* AddEntryView.swift */,
 				ED7D0B042B579CA500E5A9A2 /* EditEntryView.swift */,
 				ED7D0B062B58765B00E5A9A2 /* EntryView.swift */,
 				ED7D0B022B5798F700E5A9A2 /* Entry.swift */,
+				ED4B28ED2B62C09F00422CDB /* SwipeButtonModifier.swift */,
 				ED614BAC2B5DD62E00571557 /* ListButtonStyle.swift */,
 				ED7D0AF82B5798BD00E5A9A2 /* Assets.xcassets */,
 				ED7D0AFA2B5798BD00E5A9A2 /* Preview Content */,
@@ -158,10 +164,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED4B28EE2B62C09F00422CDB /* SwipeButtonModifier.swift in Sources */,
 				ED7D0B092B59C01B00E5A9A2 /* EntryListingView.swift in Sources */,
 				EDAFADF02B601E2300CCDDDB /* EntryListingCellView.swift in Sources */,
 				ED614BAD2B5DD62E00571557 /* ListButtonStyle.swift in Sources */,
 				ED7D0B032B5798F700E5A9A2 /* Entry.swift in Sources */,
+				ED4B28EA2B62BB6500422CDB /* EmptyListingView.swift in Sources */,
 				ED614BAF2B5DDDD500571557 /* AddEntryView.swift in Sources */,
 				ED7D0B052B579CA500E5A9A2 /* EditEntryView.swift in Sources */,
 				ED7D0B072B58765B00E5A9A2 /* EntryView.swift in Sources */,

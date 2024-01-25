@@ -29,37 +29,38 @@ struct EntryListingView: View {
     
     var body: some View {
         
-        NavigationStack {
-            ScrollView {
-                LazyVStack {
-                    //            List {
-                    ForEach(entries) { entry in
-                        
-                        EntryListingCellView(entry: entry)
-//                            .buttonStyle(ListButtonStyle())
-                            .scrollTransition { content, phase in
-                                content
-                                    .scaleEffect(phase.isIdentity ? 1 : 0.9)
-                                    .opacity(phase.isIdentity ? 1 : 0.3)
-                            }
-                        
-                        //MARK: - SCROLLVIEW doesn't seem to allow swipe actions!
-                        // Only List with embedded ForEach allows for swipe.
+        if entries.isEmpty {
+            EmptyListingView()
+        } else {
+            NavigationStack {
+                ScrollView {
+                    LazyVStack {
+                        ForEach(entries) { entry in
+                            
+                            EntryListingCellView(entry: entry)
+                                .scrollTransition { content, phase in
+                                    content
+                                        .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                                        .opacity(phase.isIdentity ? 1 : 0.3)
+                                }
+                                .swipeButtons([
+                                    CustomSwipeButton(image: Image(systemName: "trash.fill"), title: "Delete", color: .red, action: {
+                                        delete(entry: entry)
+                                    })
+                                ])
+                        }
+//                        .onDelete(perform: { indexSet in
+//                            delete(indexSet)
+//                        })
                     }
-                    .onDelete(perform: { indexSet in
-                        delete(indexSet)
-                    })
                 }
-                //.listStyle(.plain)
             }
         }
+        
     }
     
-    func delete(_ indexSet: IndexSet) {
-        for i in indexSet {
-            let entry = entries[i]
-            modelContext.delete(entry)
-        }
+    func delete(entry: Entry) {
+        modelContext.delete(entry)
     }
 }
 
