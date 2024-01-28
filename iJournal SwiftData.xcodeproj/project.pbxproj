@@ -20,6 +20,7 @@
 		ED7D0B072B58765B00E5A9A2 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7D0B062B58765B00E5A9A2 /* EntryView.swift */; };
 		ED7D0B092B59C01B00E5A9A2 /* EntryListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */; };
 		EDAFADF02B601E2300CCDDDB /* EntryListingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAFADEF2B601E2300CCDDDB /* EntryListingCellView.swift */; };
+		EDE65F612B6614D8009B6CE1 /* ViewEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE65F602B6614D8009B6CE1 /* ViewEntryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		ED7D0B062B58765B00E5A9A2 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryListingView.swift; sourceTree = "<group>"; };
 		EDAFADEF2B601E2300CCDDDB /* EntryListingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryListingCellView.swift; sourceTree = "<group>"; };
+		EDE65F602B6614D8009B6CE1 /* ViewEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEntryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,8 +77,9 @@
 				ED4B28E92B62BB6500422CDB /* EmptyListingView.swift */,
 				EDAFADEF2B601E2300CCDDDB /* EntryListingCellView.swift */,
 				ED614BAE2B5DDDD500571557 /* AddEntryView.swift */,
-				ED7D0B042B579CA500E5A9A2 /* EditEntryView.swift */,
 				ED7D0B062B58765B00E5A9A2 /* EntryView.swift */,
+				ED7D0B042B579CA500E5A9A2 /* EditEntryView.swift */,
+				EDE65F602B6614D8009B6CE1 /* ViewEntryView.swift */,
 				ED7D0B022B5798F700E5A9A2 /* Entry.swift */,
 				ED4B28ED2B62C09F00422CDB /* SwipeButtonModifier.swift */,
 				ED614BAC2B5DD62E00571557 /* ListButtonStyle.swift */,
@@ -170,6 +173,7 @@
 				ED614BAD2B5DD62E00571557 /* ListButtonStyle.swift in Sources */,
 				ED7D0B032B5798F700E5A9A2 /* Entry.swift in Sources */,
 				ED4B28EA2B62BB6500422CDB /* EmptyListingView.swift in Sources */,
+				EDE65F612B6614D8009B6CE1 /* ViewEntryView.swift in Sources */,
 				ED614BAF2B5DDDD500571557 /* AddEntryView.swift in Sources */,
 				ED7D0B052B579CA500E5A9A2 /* EditEntryView.swift in Sources */,
 				ED7D0B072B58765B00E5A9A2 /* EntryView.swift in Sources */,

@@ -12,13 +12,56 @@ import UIKit
 struct EntryView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Environment(\.editMode) var editMode
     
     @Bindable var entry: Entry
     
+    @State private var isEditing = false
+    
     var body: some View {
-        Button(entry.title) {
-            dismiss()
+        VStack {
+            // toolbar
+            HStack {
+                if isEditing {
+                    Spacer()
+                    
+                    Button {
+                        withAnimation {
+                            isEditing.toggle()
+                        }
+                    } label: {
+                        Label("Done", systemImage: "checkmark")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    
+                } else {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "arrow.down")
+                    }
+                    .buttonStyle(.bordered)
+                    
+                    Spacer()
+                    
+                    Button {
+                        withAnimation {
+                            isEditing.toggle()
+                        }
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
+            .padding()
+            
+            if isEditing {
+                EditEntryView(entry: entry)
+            } else {
+                ViewEntryView(entry: entry)
+            }
+            
+            Spacer()
         }
     }
 }
