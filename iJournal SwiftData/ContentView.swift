@@ -24,8 +24,6 @@ struct ContentView: View {
         
         VStack {
             HStack {
-                
-                //MARK: - Filtering for Title and Mood doesn't work
                 // Menu for sort order selection
                 Menu {
                     Button {

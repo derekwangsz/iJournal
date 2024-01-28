@@ -90,7 +90,6 @@ struct EditEntryView: View {
                     .focused($typing)
             }
         }
-        
         .onAppear {
             loadImages()
         }

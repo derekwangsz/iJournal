@@ -14,44 +14,63 @@ struct ViewEntryView: View {
     var entry: Entry
     
     @State private var images: [Image] = []
+    @State private var finishedLoading = false
     
     var body: some View {
-        ScrollView {
-            Text(entry.title)
-                .font(.largeTitle)
-            
-            LazyVGrid(columns: [GridItem(.flexible()),
-                                GridItem(.flexible())]) {
-                ForEach(0..<images.count, id: \.self) { i in
-                    images[i]
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(20)
+        if finishedLoading {
+            ScrollView {
+                Text(entry.title)
+                    .font(.largeTitle)
+                
+                VStack {
+                    ForEach(Array(stride(from: 0, to: images.count, by: 2)), id: \.self) { i in
+                        HStack {
+                            images[i]
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .cornerRadius(20)
+                            
+                            if i + 1 < images.count {
+                                images[i + 1]
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .cornerRadius(20)
+                            }
+                        }
+                    }
+                    
                 }
+                
+                Text("Your mood was a \(Int(entry.happinessIndex)) out of 10!")
+                
+                Text(entry.text)
+                
             }
+            .padding(.horizontal)
             
-            Text("Your mood was a \(Int(entry.happinessIndex)) out of 10!")
-            
-            Text(entry.text)
-            
+        } else {
+            ProgressView()
+                .task {
+                    await loadImages()
+                }
         }
-        .padding(.horizontal)
-        .onAppear {
-            loadImages()
+        
+        
+    }
+    
+    func loadImages() async {
+        images = entry.images.map { data in
+            if let uiImage = UIImage(data: data) {
+                Image(uiImage: uiImage)
+            } else {
+                Image("ramen")
+            }
+        }
+        withAnimation(.easeInOut) {
+            finishedLoading = true
         }
     }
     
-    func loadImages() {
-        withAnimation(.easeInOut) {
-            images = entry.images.map { data in
-                if let uiImage = UIImage(data: data) {
-                    Image(uiImage: uiImage)
-                } else {
-                    Image("ramen")
-                }
-            }
-        }
-    }
 }
 
 #Preview {
