@@ -23,86 +23,71 @@ struct EditEntryView: View {
     @Bindable var entry: Entry
     
     var body: some View {
-        VStack {
-            HStack {
-                Text(entry.date.formatted(date: .abbreviated, time: .shortened))
-                    .font(.headline.bold())
-                
-                Spacer()
-                
-                Button("Save") {
-                    dismiss()
-                }
-                .font(.headline)
-                
+        
+        Form {
+            Section("Title") {
+                TextField("Title", text: $entry.title, prompt: Text("Title..."))
+                    .font(.title)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
             }
-            .padding(25)
             
-            Form {
-                Section("Title") {
-                    TextField("Title", text: $entry.title, prompt: Text("Title..."))
-                        .font(.title)
-                        .lineLimit(2)
-                        .multilineTextAlignment(.leading)
+            Section("Images") {
+                PhotosPicker(selection: $selectedItems, matching: .images) {
+                    HStack {
+                        Circle()
+                            .opacity(0.5)
+                            .overlay {
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .padding()
+                            }
+                            .frame(width: 50, height: 50)
+                        
+                        Text("Add Image")
+                            .font(.title)
+                            .fontWeight(.bold)
+                        
+                    }
                 }
-                
-                Section("Images") {
-                    PhotosPicker(selection: $selectedItems, matching: .images) {
-                        HStack {
-                            Circle()
-                                .opacity(0.5)
-                                .overlay {
-                                    Image(systemName: "plus")
-                                        .resizable()
-                                        .padding()
-                                }
-                                .frame(width: 50, height: 50)
-                            
-                            Text("Add Image")
-                                .font(.title)
-                                .fontWeight(.bold)
-                            
-                        }
-                    }
-                    .onChange(of: selectedItems) {
-                        Task {
-                            await fetchImages()
-                        }
-                    }
-                    
-                    LazyVGrid (columns: [GridItem(.flexible()),
-                                         GridItem(.flexible()),
-                                         GridItem(.flexible())], alignment: .leading, spacing: 10) {
-                        ForEach(0..<selectedImages.count, id: \.self) { i in
-                            selectedImages[i]
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .cornerRadius(20)
-                                
-                        }
+                .onChange(of: selectedItems) {
+                    Task {
+                        await fetchImages()
                     }
                 }
                 
-                Section("How are you feeling?") {
-                    VStack {
-                        Text("Your mood...")
-                            .font(.title3)
-                            .fontDesign(.serif)
-                        Slider(value: $entry.happinessIndex,
-                               in: 0...10, step: 1,
-                               label: { Text("\(Int(entry.happinessIndex))") },
-                               minimumValueLabel:
-                                { Text("🤮").font(.title)},
-                               maximumValueLabel:
-                                {Text("🚀").font(.title)})
+                LazyVGrid (columns: [GridItem(.flexible()),
+                                     GridItem(.flexible()),
+                                     GridItem(.flexible())], alignment: .leading, spacing: 10) {
+                    ForEach(0..<selectedImages.count, id: \.self) { i in
+                        selectedImages[i]
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(20)
+                        
                     }
                 }
-                
-                
-                Section("Write down your throughts") {
-                    TextEditor(text: $entry.text)
-                        .focused($typing)
+            }
+            
+            Section("How are you feeling?") {
+                VStack {
+                    Text("Your mood...")
+                        .font(.title3)
+                        .fontDesign(.serif)
+                    Slider(value: $entry.happinessIndex,
+                           in: 0...10, step: 1,
+                           label: { Text("\(Int(entry.happinessIndex))") },
+                           minimumValueLabel:
+                            { Text("🤮").font(.title)},
+                           maximumValueLabel:
+                            {Text("🚀").font(.title)})
                 }
+            }
+            
+            
+            Section("Write down your throughts") {
+                TextEditor(text: $entry.text)
+                    .focused($typing)
             }
         }
         .onAppear {

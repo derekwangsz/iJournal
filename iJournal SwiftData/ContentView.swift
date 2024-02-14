@@ -15,7 +15,7 @@ struct ContentView: View {
     
     @State private var searchText = ""
     
-    @State private var sortDescriptor: SortDescriptor<Entry> = SortDescriptor(\Entry.date)
+    @State private var sortDescriptor: SortDescriptor<Entry> = SortDescriptor(\Entry.date, order: .reverse)
     
     @State private var presentSheet = false
     
@@ -24,17 +24,32 @@ struct ContentView: View {
         
         VStack {
             HStack {
-                
                 // Menu for sort order selection
                 Menu {
-                    Picker("Sort", selection: $sortDescriptor) {
-                        Text("Date")
-                            .tag(SortDescriptor(\Entry.date))
-                        Text("Title")
-                            .tag(SortDescriptor(\Entry.title))
-                        Text("Mood")
-                            .tag(SortDescriptor(\Entry.happinessIndex, order: .reverse))
+                    Button {
+                        withAnimation {
+                            sortDescriptor = SortDescriptor(\Entry.date, order: .reverse)
+                        }
+                    } label: {
+                        Label("Date", systemImage: "clock")
                     }
+                    
+                    Button {
+                        withAnimation {
+                            sortDescriptor = SortDescriptor(\Entry.title)
+                        }
+                    } label: {
+                        Label("Title", systemImage: "textformat.alt")
+                    }
+                    
+                    Button {
+                        withAnimation {
+                            sortDescriptor = SortDescriptor(\Entry.happinessIndex, order: .reverse)
+                        }
+                    } label: {
+                        Label("Mood", systemImage: "face.smiling")
+                    }
+                    
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                         .font(.title2)

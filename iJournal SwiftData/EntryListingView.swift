@@ -14,6 +14,7 @@ struct EntryListingView: View {
     @Query private var entries: [Entry]
     
     @State private var presentEntry = false
+    @State private var showDialog = false
     
     init(searchText: String, sort: SortDescriptor<Entry>) {
         _entries = Query(
@@ -23,43 +24,47 @@ struct EntryListingView: View {
                 } else {
                     return $0.title.localizedStandardContains(searchText)
                 }},
-            sort: [sort], 
+            sort: [sort],
             animation: .easeInOut)
     }
     
     var body: some View {
         
-        NavigationStack {
-            ScrollView {
-                LazyVStack {
-                    ForEach(entries) { entry in
-                        NavigationLink(value: entry) {
+        if entries.isEmpty {
+            EmptyListingView()
+        } else {
+            NavigationStack {
+                ScrollView {
+                    LazyVStack {
+                        ForEach(entries) { entry in
                             EntryListingCellView(entry: entry)
-                        }
-                        .buttonStyle(ListButtonStyle())
-                        .scrollTransition { content, phase in
-                            content
-                                .scaleEffect(phase.isIdentity ? 1 : 0.9)
-                                .opacity(phase.isIdentity ? 1 : 0.3)
+                                .scrollTransition { content, phase in
+                                    content
+                                        .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                                        .opacity(phase.isIdentity ? 1 : 0.3)
+                                }
+                                .swipeButtons([
+                                    CustomSwipeButton(image: Image(systemName: "trash.fill"), title: "Delete", color: .red, action: {
+                                        //MARK: - For some reason when we use confirmationDialog sometimes the wrong entry is selected...
+                                        // showDialog = true
+                                        delete(entry: entry)
+                                    })
+                                ])
+                                .confirmationDialog("Delete \"\(entry.title)\"?", isPresented: $showDialog, titleVisibility: .visible) {
+                                    Button("Yes", role: .destructive) {
+                                        delete(entry: entry)
+                                    }
+                                }
                         }
                     }
-                    .onDelete(perform: { indexSet in
-                        delete(indexSet)
-                    })
                 }
             }
-            .navigationDestination(for: Entry.self) { entry in
-                EntryView(entry: entry)
-            }
-            .toolbar(.hidden, for: .navigationBar)
         }
+        
     }
     
-    func delete(_ indexSet: IndexSet) {
-        for i in indexSet {
-            let entry = entries[i]
-            modelContext.delete(entry)
-        }
+    func delete(entry: Entry) {
+        modelContext.delete(entry)
     }
 }
 

@@ -10,7 +10,13 @@ import SwiftData
 
 struct EntryListingCellView: View {
     
-    var entry : Entry
+    @Environment(\.modelContext) var modelContext
+    @Bindable var entry : Entry
+    
+    @State private var showModal = false
+    
+    @State private var scale = 1.0
+    @State private var opacity = 1.0
     
     var body: some View {
         HStack {
@@ -33,6 +39,34 @@ struct EntryListingCellView: View {
                 Text("\(entry.getMood()) \( entry.date.formatted(date:.abbreviated, time: .omitted))")
                     .font(.caption)
             }
+        }
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(50)
+        .shadow(color: Color.secondary, radius: 2, x: 1, y: 4)
+        .scaleEffect(scale)
+        .opacity(opacity)
+        
+        .onTapGesture {
+            withAnimation {
+                opacity = 0.8
+                scale = 0.8
+            }
+            withAnimation {
+                opacity = 1
+                scale = 1
+            }
+            showModal = true
+        }
+        
+        .fullScreenCover(isPresented: $showModal) {
+            EntryView(entry: entry)
+        }
+    }
+    
+    func delete() {
+        withAnimation {
+            modelContext.delete(entry)
         }
     }
 }
