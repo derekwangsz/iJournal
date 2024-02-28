@@ -49,10 +49,15 @@ struct ViewEntryView: View {
             .padding(.horizontal)
             
         } else {
-            ProgressView()
-                .task {
-                    await loadImages()
-                }
+            VStack {
+                Spacer()
+                ProgressView()
+                    .task {
+                        await loadImages()
+                    }
+                Spacer()
+            }
+            
         }
         
         

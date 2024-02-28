@@ -46,7 +46,6 @@ struct EntryListingCellView: View {
         .shadow(color: Color.secondary, radius: 2, x: 1, y: 4)
         .scaleEffect(scale)
         .opacity(opacity)
-        
         .onTapGesture {
             withAnimation {
                 opacity = 0.8

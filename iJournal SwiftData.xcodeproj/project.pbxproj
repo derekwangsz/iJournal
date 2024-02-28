@@ -20,6 +20,7 @@
 		ED7D0B072B58765B00E5A9A2 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7D0B062B58765B00E5A9A2 /* EntryView.swift */; };
 		ED7D0B092B59C01B00E5A9A2 /* EntryListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */; };
 		EDAFADF02B601E2300CCDDDB /* EntryListingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAFADEF2B601E2300CCDDDB /* EntryListingCellView.swift */; };
+		EDB08F5A2B8EFF4100418F98 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB08F592B8EFF4100418F98 /* HomeView.swift */; };
 		EDE65F612B6614D8009B6CE1 /* ViewEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE65F602B6614D8009B6CE1 /* ViewEntryView.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,8 @@
 		ED7D0B062B58765B00E5A9A2 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryListingView.swift; sourceTree = "<group>"; };
 		EDAFADEF2B601E2300CCDDDB /* EntryListingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryListingCellView.swift; sourceTree = "<group>"; };
+		EDB08F582B8EFE1F00418F98 /* iJournal-SwiftData-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "iJournal-SwiftData-Info.plist"; sourceTree = SOURCE_ROOT; };
+		EDB08F592B8EFF4100418F98 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		EDE65F602B6614D8009B6CE1 /* ViewEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEntryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,8 +74,10 @@
 		ED7D0AF32B5798BC00E5A9A2 /* iJournal SwiftData */ = {
 			isa = PBXGroup;
 			children = (
+				EDB08F582B8EFE1F00418F98 /* iJournal-SwiftData-Info.plist */,
 				ED7D0AF42B5798BC00E5A9A2 /* iJournal_SwiftDataApp.swift */,
 				ED7D0AF62B5798BC00E5A9A2 /* ContentView.swift */,
+				EDB08F592B8EFF4100418F98 /* HomeView.swift */,
 				ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */,
 				ED4B28E92B62BB6500422CDB /* EmptyListingView.swift */,
 				EDAFADEF2B601E2300CCDDDB /* EntryListingCellView.swift */,
@@ -169,6 +174,7 @@
 			files = (
 				ED4B28EE2B62C09F00422CDB /* SwipeButtonModifier.swift in Sources */,
 				ED7D0B092B59C01B00E5A9A2 /* EntryListingView.swift in Sources */,
+				EDB08F5A2B8EFF4100418F98 /* HomeView.swift in Sources */,
 				EDAFADF02B601E2300CCDDDB /* EntryListingCellView.swift in Sources */,
 				ED614BAD2B5DD62E00571557 /* ListButtonStyle.swift in Sources */,
 				ED7D0B032B5798F700E5A9A2 /* Entry.swift in Sources */,
@@ -315,12 +321,14 @@
 				DEVELOPMENT_TEAM = ZXJ69DSW3S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to access your album to add photos to your journals!";
+				INFOPLIST_FILE = "iJournal-SwiftData-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = iJournal;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -345,12 +353,14 @@
 				DEVELOPMENT_TEAM = ZXJ69DSW3S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to access your album to add photos to your journals!";
+				INFOPLIST_FILE = "iJournal-SwiftData-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = iJournal;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

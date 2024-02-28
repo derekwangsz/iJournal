@@ -8,90 +8,43 @@
 import SwiftUI
 import SwiftData
 import UIKit
+import LocalAuthentication
+import LocalAuthenticationEmbeddedUI
 
 struct ContentView: View {
     
-    @Environment(\.modelContext) var modelContext
-    
-    @State private var searchText = ""
-    
-    @State private var sortDescriptor: SortDescriptor<Entry> = SortDescriptor(\Entry.date, order: .reverse)
-    
-    @State private var presentSheet = false
-    
+    @State private var isAuthenticated = false
     
     var body: some View {
-        
-        VStack {
-            HStack {
-                // Menu for sort order selection
-                Menu {
-                    Button {
-                        withAnimation {
-                            sortDescriptor = SortDescriptor(\Entry.date, order: .reverse)
-                        }
-                    } label: {
-                        Label("Date", systemImage: "clock")
-                    }
-                    
-                    Button {
-                        withAnimation {
-                            sortDescriptor = SortDescriptor(\Entry.title)
-                        }
-                    } label: {
-                        Label("Title", systemImage: "textformat.alt")
-                    }
-                    
-                    Button {
-                        withAnimation {
-                            sortDescriptor = SortDescriptor(\Entry.happinessIndex, order: .reverse)
-                        }
-                    } label: {
-                        Label("Mood", systemImage: "face.smiling")
-                    }
-                    
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
-                        .font(.title2)
+        if isAuthenticated {
+            HomeView()
+        } else {
+            Spacer()
+                .onAppear {
+                    authenticate()
                 }
-                
-                Spacer()
-                
-                Text("iJournal")
-                    .font(.system(size: 42))
-                    .fontDesign(.rounded)
-                    .fontWeight(.thin)
-                    .padding()
-                
-                Spacer()
-                
-                Button {
-                    // construct new Entry & transition to EditEntryView
-                    presentSheet = true
-                    
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                        .font(.title2)
+        }
+    }
+    
+    func authenticate() {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reasonString = "We need to unlock your journals..."
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString) { success, error in
+                if success {
+                    withAnimation {
+                        isAuthenticated = true
+                    }
+                } else {
+                    // authentication failed
                 }
             }
-            .padding(.horizontal)
-            
-            TextField("Search...", text: $searchText)
-                .padding(.horizontal)
-                .padding(.vertical, 5)
-                .background(.quaternary)
-                .cornerRadius(30)
-                .padding(.horizontal)
-                .font(.title3)
-                .fontWeight(.thin)
-                .fontDesign(.serif)
-            
-            Divider()
-            
-            EntryListingView(searchText: searchText, sort: sortDescriptor)
-        }
-        .sheet(isPresented: $presentSheet) {
-            AddEntryView()
+        } else {
+            withAnimation {
+                isAuthenticated = true
+            }
         }
     }
 }
