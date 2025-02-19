@@ -63,6 +63,38 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		ED6738702D664E9D00ECE3C6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ED7D0AF62B5798BC00E5A9A2 /* ContentView.swift */,
+				EDB08F592B8EFF4100418F98 /* HomeView.swift */,
+				ED614BAE2B5DDDD500571557 /* AddEntryView.swift */,
+				ED6738712D664EDF00ECE3C6 /* EntryListingView */,
+				ED6738722D664EED00ECE3C6 /* EntryView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ED6738712D664EDF00ECE3C6 /* EntryListingView */ = {
+			isa = PBXGroup;
+			children = (
+				ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */,
+				ED4B28E92B62BB6500422CDB /* EmptyListingView.swift */,
+				EDAFADEF2B601E2300CCDDDB /* EntryListingCellView.swift */,
+			);
+			path = EntryListingView;
+			sourceTree = "<group>";
+		};
+		ED6738722D664EED00ECE3C6 /* EntryView */ = {
+			isa = PBXGroup;
+			children = (
+				ED7D0B062B58765B00E5A9A2 /* EntryView.swift */,
+				ED7D0B042B579CA500E5A9A2 /* EditEntryView.swift */,
+				EDE65F602B6614D8009B6CE1 /* ViewEntryView.swift */,
+			);
+			path = EntryView;
+			sourceTree = "<group>";
+		};
 		ED7D0AE82B5798BC00E5A9A2 = {
 			isa = PBXGroup;
 			children = (
@@ -84,15 +116,7 @@
 			children = (
 				EDB08F582B8EFE1F00418F98 /* iJournal-SwiftData-Info.plist */,
 				ED7D0AF42B5798BC00E5A9A2 /* iJournal_SwiftDataApp.swift */,
-				ED7D0AF62B5798BC00E5A9A2 /* ContentView.swift */,
-				EDB08F592B8EFF4100418F98 /* HomeView.swift */,
-				ED7D0B082B59C01B00E5A9A2 /* EntryListingView.swift */,
-				ED4B28E92B62BB6500422CDB /* EmptyListingView.swift */,
-				EDAFADEF2B601E2300CCDDDB /* EntryListingCellView.swift */,
-				ED614BAE2B5DDDD500571557 /* AddEntryView.swift */,
-				ED7D0B062B58765B00E5A9A2 /* EntryView.swift */,
-				ED7D0B042B579CA500E5A9A2 /* EditEntryView.swift */,
-				EDE65F602B6614D8009B6CE1 /* ViewEntryView.swift */,
+				ED6738702D664E9D00ECE3C6 /* View */,
 				ED67386F2D664CF500ECE3C6 /* Model */,
 				ED4B28ED2B62C09F00422CDB /* SwipeButtonModifier.swift */,
 				ED614BAC2B5DD62E00571557 /* ListButtonStyle.swift */,
