@@ -55,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED67386F2D664CF500ECE3C6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ED7D0B022B5798F700E5A9A2 /* Entry.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		ED7D0AE82B5798BC00E5A9A2 = {
 			isa = PBXGroup;
 			children = (
@@ -85,7 +93,7 @@
 				ED7D0B062B58765B00E5A9A2 /* EntryView.swift */,
 				ED7D0B042B579CA500E5A9A2 /* EditEntryView.swift */,
 				EDE65F602B6614D8009B6CE1 /* ViewEntryView.swift */,
-				ED7D0B022B5798F700E5A9A2 /* Entry.swift */,
+				ED67386F2D664CF500ECE3C6 /* Model */,
 				ED4B28ED2B62C09F00422CDB /* SwipeButtonModifier.swift */,
 				ED614BAC2B5DD62E00571557 /* ListButtonStyle.swift */,
 				ED7D0AF82B5798BD00E5A9A2 /* Assets.xcassets */,
