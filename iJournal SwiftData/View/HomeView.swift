@@ -88,7 +88,7 @@ struct HomeView: View {
                 .animation(.easeInOut, value: sortDescriptor)
         }
         .sheet(isPresented: $presentSheet) {
-            AddEntryView()
+            AddEntryView(modelContext: modelContext)
         }
     }
 }

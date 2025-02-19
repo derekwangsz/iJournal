@@ -17,14 +17,12 @@ struct AddEntryView: View {
     
     @FocusState private var typing : Bool
     
-    @State private var selectedItems = [PhotosPickerItem]()
-    @State private var selectedImages = [Image]()
+    @State private var viewModel: AddEntryViewModel
     
-    @State private var title = ""
-    @State private var date = Date.now
-    @State private var mood = 7.0
-    @State private var imageData: [Data] = []
-    @State private var text = ""
+    init(modelContext: ModelContext) {
+        let viewModel = AddEntryViewModel(modelContext: modelContext)
+        _viewModel = State(initialValue: viewModel)
+    }
     
     var body: some View {
         VStack {
@@ -36,13 +34,13 @@ struct AddEntryView: View {
                 
                 Spacer()
                 
-                Text(date.formatted(date: .abbreviated, time: .shortened))
+                Text(viewModel.date.formatted(date: .abbreviated, time: .shortened))
                     .font(.headline.bold())
                 
                 Spacer()
                 
                 Button("Save") {
-                    save()
+                    viewModel.save()
                     dismiss()
                 }
                 .font(.headline)
@@ -52,14 +50,14 @@ struct AddEntryView: View {
             
             Form {
                 Section("Title") {
-                    TextField("Title", text: $title, prompt: Text("Title..."))
+                    TextField("Title", text: $viewModel.title, prompt: Text("Title..."))
                         .font(.title)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
                 }
                 
                 Section("Images") {
-                    PhotosPicker(selection: $selectedItems, matching: .images) {
+                    PhotosPicker(selection: $viewModel.selectedItems, matching: .images) {
                         HStack {
                             Circle()
                                 .opacity(0.5)
@@ -76,21 +74,21 @@ struct AddEntryView: View {
                             
                         }
                     }
-                    .onChange(of: selectedItems) {
+                    .onChange(of: viewModel.selectedItems) {
                         Task {
-                            await fetchImages()
+                            await viewModel.fetchImages()
                         }
                     }
                     
                     LazyVGrid (columns: [GridItem(.flexible()),
                                          GridItem(.flexible()),
                                          GridItem(.flexible())], alignment: .leading, spacing: 10) {
-                        ForEach(0..<selectedImages.count, id: \.self) { i in
-                            selectedImages[i]
+                        ForEach(0..<viewModel.selectedImages.count, id: \.self) { i in
+                            viewModel.selectedImages[i]
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .cornerRadius(20)
-                                
+                            
                         }
                     }
                 }
@@ -100,9 +98,9 @@ struct AddEntryView: View {
                         Text("Your mood...")
                             .font(.title3)
                             .fontDesign(.serif)
-                        Slider(value: $mood,
+                        Slider(value: $viewModel.mood,
                                in: 0...10, step: 1,
-                               label: { Text("\(Int(mood))") },
+                               label: { Text("\(Int(viewModel.mood))") },
                                minimumValueLabel:
                                 { Text("🤮").font(.title)},
                                maximumValueLabel:
@@ -112,33 +110,23 @@ struct AddEntryView: View {
                 
                 
                 Section("Write down your throughts") {
-                    TextEditor(text: $text)
+                    TextEditor(text: $viewModel.text)
                         .focused($typing)
                 }
             }
         }
     }
-    
-    func fetchImages() async {
-        for item in selectedItems {
-            if let data = try? await item.loadTransferable(type: Data.self) {
-                imageData.insert(data, at: 0)
-                
-                guard let uiImage = UIImage(data: data) else { return }
-                withAnimation(.easeInOut) {
-                    selectedImages.insert(Image(uiImage: uiImage), at: 0)
-                }
-            }
-        }
-    }
-    
-    func save() {
-        let newEntry = Entry(images: imageData, happinessIndex: mood, date: .now, title: title, text: text)
-        modelContext.insert(newEntry)
-    }
-    
 }
 
 #Preview {
-    AddEntryView()
+    do {
+        // To use example data for the preview, we need to establish our own temporary model container in memory that stores our example data and use that in the preview.
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: Entry.self, configurations: config)
+        
+        return AddEntryView(modelContext: container.mainContext)
+    } catch {
+        fatalError("Failed to make model")
+    }
+    
 }

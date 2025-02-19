@@ -43,18 +43,6 @@ struct EntryListingView: View {
                                         .scaleEffect(phase.isIdentity ? 1 : 0.9)
                                         .opacity(phase.isIdentity ? 1 : 0.3)
                                 }
-                                .swipeButtons([
-                                    CustomSwipeButton(image: Image(systemName: "trash.fill"), title: "Delete", color: .red, action: {
-                                        //MARK: - For some reason when we use confirmationDialog sometimes the wrong entry is selected...
-                                        // showDialog = true
-                                        delete(entry: entry)
-                                    })
-                                ])
-                                .confirmationDialog("Delete \"\(entry.title)\"?", isPresented: $showDialog, titleVisibility: .visible) {
-                                    Button("Yes", role: .destructive) {
-                                        delete(entry: entry)
-                                    }
-                                }
                         }
                     }
                 }

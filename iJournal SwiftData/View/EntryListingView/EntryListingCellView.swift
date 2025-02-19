@@ -38,6 +38,8 @@ struct EntryListingCellView: View {
                     .fontDesign(.serif)
                 Text("\(entry.getMood()) \( entry.date.formatted(date:.abbreviated, time: .omitted))")
                     .font(.caption)
+                
+                
             }
         }
         .padding()
@@ -46,18 +48,23 @@ struct EntryListingCellView: View {
         .shadow(color: Color.secondary, radius: 2, x: 1, y: 4)
         .scaleEffect(scale)
         .opacity(opacity)
+        .swipeButtons([
+            CustomSwipeButton(image: Image(systemName: "trash.fill"), title: "Delete", color: .red, action: {
+                delete()
+            })
+        ])
         .onTapGesture {
-            withAnimation {
-                opacity = 0.8
-                scale = 0.8
+            withAnimation() {
+                scale = 1.1
+                opacity = 1.1
             }
-            withAnimation {
-                opacity = 1
-                scale = 1
-            }
+            
             showModal = true
+            
+            scale = 1
+            opacity = 1
+            
         }
-        
         .fullScreenCover(isPresented: $showModal) {
             EntryView(entry: entry)
         }
